@@ -53,7 +53,7 @@ const Navbar = () => {
      </button>
    </div>
    {/*MOBILE MENU */}
-   <div className={`md:hidden absolute top-full left-0 right-0 bg-gradient-to-b focus-red-500 to-orange-600 rounded-2xl shadow-xl mt-3 mx-4 transition-all duration-300 transform ${isOpen? "opacity-100 visible scale-110" : "opacity-0 invisible scale-95 "}`}>
+   <div className={`md:hidden absolute top-full left-0 right-0 bg-gradient-to-b from-red-400 to-orange-600 rounded-2xl shadow-xl mt-3 mx-4 transition-all duration-300 transform ${isOpen? "opacity-100 visible scale-110" : "opacity-0 invisible scale-95 "}`}>
      <div className="p-4  space-y-4 " >
        {menuItems.map((item,index)=> (
        <button key={index} className="w-full flex items-center space-x-3 text-white hover:bg-white/20 px-4 py-3 rounded-xl transition-all focus:outline-none " >
