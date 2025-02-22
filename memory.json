@@ -1,0 +1,9 @@
+{
+    "\nWARNING: apt does not have a stable CLI interface. Use with caution in scripts.\n\nError: Unable to locate package pytham\n": "```bash\nsudo apt update && sudo apt install python3\n```",
+    "npm error Missing script: \"start\"\nnpm error\nnpm error Did you mean one of these?\nnpm error   npm star # Mark your favorite packages\nnpm error   npm stars # View packages marked as favorites\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /root/.npm/_logs/2025-02-21T15_49_30_678Z-debug-0.log\n": "npm run start",
+    "npm error Missing script: \"start\"\nnpm error\nnpm error Did you mean one of these?\nnpm error   npm star # Mark your favorite packages\nnpm error   npm stars # View packages marked as favorites\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /root/.npm/_logs/2025-02-21T15_49_45_645Z-debug-0.log\n": "```bash\nnpm run\n```",
+    "/bin/sh: 1: Syntax error: \"(\" unexpected\n": "/bin/sh -c 'your_command_here'",
+    "npm error Missing script: \"start\"\nnpm error\nnpm error Did you mean one of these?\nnpm error   npm star # Mark your favorite packages\nnpm error   npm stars # View packages marked as favorites\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /root/.npm/_logs/2025-02-21T17_28_28_713Z-debug-0.log\n": "```bash\nnpm run\n```",
+    "/bin/sh: 0: -c requires an argument\n": "/bin/sh -c \"your_command_here\"",
+    "/bin/sh: 0: Illegal option --\n": "/bin/sh -c 'your_command_here'"
+}
