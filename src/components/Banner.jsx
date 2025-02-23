@@ -81,7 +81,16 @@ const Banner = () => {
         {/* RIGHT SECTION */}
         <div className="w-full lg:flex-1 relative max-w-sm sm:max-w-md md:max-w-lg lg:max-w-none mx-auto">
           <div className="relative mx-auto">
-            <img src={Bannerfood} alt="Banner food" className="w-full h-auto object-cover transform -rotate-6 hover:rotate-0 transition duration-500" />
+            {/* Food Image with Hover and Touch Effect */}
+            <img
+              src={Bannerfood}
+              alt="Banner food"
+              className="hover-effect w-full h-auto object-cover transform -rotate-6 transition duration-500"
+              onMouseEnter={(e) => e.currentTarget.classList.add('rotate-0')}
+              onMouseLeave={(e) => e.currentTarget.classList.remove('rotate-0')}
+              onTouchStart={(e) => e.currentTarget.classList.add('rotate-0')}
+              onTouchEnd={(e) => e.currentTarget.classList.remove('rotate-0')}
+            />
             
             <div className="absolute left-2 sm:left-4 md:left-6 top-4 sm:top-6 w-14 sm:w-16 md:w-20">
               <img src={BannerClock} alt="clock" className="w-full h-auto -rotate-3 hover:rotate-0" />

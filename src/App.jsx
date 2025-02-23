@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import Banner from "./components/Banner";
 import Wws from "./components/Wws";
+import Om from "./components/Om"
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
        </div>
        <div className="w-full">
   <Wws />
+  <Om />
 </div>
      </main>
     </div>
