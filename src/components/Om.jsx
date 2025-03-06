@@ -1,35 +1,42 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaChevronLeft, FaChevronRight, FaHeart, FaShareAlt ,FaStar } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaHeart, FaShareAlt, FaStar } from "react-icons/fa";
 
-export const Om = () => {
+const Om = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const menuRef = useRef(null);
-  const imageRef = useRef(null);
-  let touchStartX = 0;
 
+  // Fetch Menu Data from API
   useEffect(() => {
     const fetchMenu = async () => {
       try {
         const response = await fetch("http://localhost:5000/menu");
+        console.log("Response Status:", response.status);
+
         if (!response.ok) throw new Error("Failed to fetch menu");
+
         const data = await response.json();
+        console.log("Fetched Data:", data);
 
         if (!data.menu || !Array.isArray(data.menu) || data.menu.length === 0) {
-          throw new Error("Invalid menu data");
+          throw new Error("No menu items found.");
         }
 
         setMenuItems(data.menu);
         setSelectedItem(data.menu[0]);
-      } catch (error) {
-        console.error("Error fetching menu:", error.message);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchMenu();
   }, []);
 
-  // Change Item with Arrows
+  // Change Menu Item (Left/Right)
   const handleChangeItem = (direction) => {
     if (!menuItems.length || !selectedItem) return;
 
@@ -58,23 +65,16 @@ export const Om = () => {
     }
   };
 
-  // Handle Swipe on Image
-  const handleTouchStart = (e) => {
-    touchStartX = e.touches[0].clientX;
-  };
+  if (loading) {
+    return <div className="text-center py-10 font-semibold text-gray-700">Loading menu...</div>;
+  }
 
-  const handleTouchEnd = (e) => {
-    if (!selectedItem || !menuItems.length) return;
-
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-
-    if (diff > 50) handleChangeItem("right"); // Swipe Left → Next Item
-    if (diff < -50) handleChangeItem("left"); // Swipe Right → Previous Item
-  };
+  if (error) {
+    return <div className="text-center py-10 font-semibold text-red-600">{error}</div>;
+  }
 
   if (!selectedItem) {
-    return <div className="text-center py-10 font-semibold text-gray-700">Loading menu...</div>;
+    return <div className="text-center py-10 font-semibold text-gray-700">No menu available.</div>;
   }
 
   const currentIndex = menuItems.findIndex((item) => item.name === selectedItem.name) + 1;
@@ -85,19 +85,14 @@ export const Om = () => {
       
       {/* DISPLAY SELECTED ITEM */}
       <div className="w-full max-w-lg flex flex-col items-center">
-        <div 
-          ref={imageRef} 
-          className="p-2 sm:p-3 rounded-3xl w-full"
-          onTouchStart={handleTouchStart} 
-          onTouchEnd={handleTouchEnd}
-        >
+        <div className="p-2 sm:p-3 rounded-3xl w-full">
           <img 
             src={selectedItem.image1 || "https://via.placeholder.com/400"} 
             alt={selectedItem.name || "Unknown Item"} 
             className="w-full h-auto object-cover rounded-xl"
           />
         </div>
-        <h2 className="text-lg sm:text-2xl md:text-3xl font-comfortaa font-bold mt-3 sm:mt-5 text-gray-800">
+        <h2 className="text-lg sm:text-2xl md:text-3xl font-bold mt-3 sm:mt-5 text-gray-800">
           {selectedItem.name || "Unknown Item"}
         </h2>
         <p className="text-base sm:text-xl md:text-2xl font-semibold text-amber-600">
@@ -133,10 +128,7 @@ export const Om = () => {
                 hover:bg-amber-500 hover:text-white active:bg-amber-700 focus:bg-amber-600 shadow-md`
               }
             > 
-              <div className={`w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-r 
-                ${selectedItem.name === item.name ? "from-yellow-400 to-orange-500 border-4 border-white shadow-lg scale-105" : "from-gray-200 to-gray-300 border-2 border-transparent"}
-                text-white shadow-md transition-all duration-300 transform hover:scale-110 active:scale-105`}
-              >
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 text-gray-800 shadow-md">
                 <span className='text-lg'>{item.icon || "🍽️"}</span>
               </div>
               <h3 className='text-xs md:text-sm font-semibold mt-2'>{item.name || "Unknown"}</h3>
@@ -152,18 +144,14 @@ export const Om = () => {
           <FaChevronRight size={16} />
         </button>
       </div>
-      {/*ADDITIONAL ICONS*/}
-      <div className='mt-4 md:mt-6 flex justify-between space-x-3 md:space-x-4 lg:space-x-6'>
-        <div className='flex items-center justify-center p-2 md:p-3 bg-white rounded-full shadow-xl transform transition hover:scale-110'>
-          <FaHeart className='text-red-500' size={20} />
-        </div>
-        <div className='flex items-center justify-between p-2 md:p-3 bg-white rounded-full shadow-xl transform transition hover:scale-110'>
-          <FaStar className='text-yellow-500' size={20} />
-        </div>
-        <div className='flex items-center justify-center p-2 md:p-3 bg-white rounded-full shadow-xl transform transition hover:scale-110'>
-          <FaShareAlt className='text-blue-500' size={20} />
-        </div>
+
+      {/* ICONS: LIKE, RATING, SHARE */}
+      <div className='mt-4 flex space-x-4'>
+        <FaHeart className="text-red-500 text-xl cursor-pointer hover:scale-110 transition-transform" />
+        <FaStar className="text-yellow-500 text-xl cursor-pointer hover:scale-110 transition-transform" />
+        <FaShareAlt className="text-blue-500 text-xl cursor-pointer hover:scale-110 transition-transform" />
       </div>
+
     </div>
   );
 };
